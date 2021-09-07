@@ -1,0 +1,19 @@
+.timeline-mobile {
+display: block;
+ margin: 0 auto;
+}
+
+.timeline-desktop {
+display: none;
+ margin: 0 auto;
+}
+
+@media (min-width: 768px) {
+.timeline-mobile {
+display: none;
+}
+
+.timeline-desktop {
+display: block;
+}
+}

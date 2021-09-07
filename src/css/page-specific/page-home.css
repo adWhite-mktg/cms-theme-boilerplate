@@ -1,0 +1,31 @@
+/* remove padding from hs elements surrounding hero module*/
+#main-content > div > div > div > div > div.row-fluid-wrapper.row-depth-1.row-number-1.dnd_area-row-0-margin.dnd_area-row-0-force-full-width-section.dnd-section.dnd_area-row-0-padding > div > div {
+  padding: 0;
+}
+
+/* pull hero up to overlap main nav */
+
+@media (min-width: 1390px) {
+  main#main-content {
+       margin-top: -77px;
+   }
+}
+
+@media (min-width: 1400px) {
+  main#main-content {
+       margin-top: -89px;
+   }
+}
+
+@media (min-width: 1470px) {
+  main#main-content {
+       margin-top: -93px;
+   }
+}
+
+
+@media (min-width: 1695px) {
+  main#main-content {
+       margin-top: -106px;
+   }
+}

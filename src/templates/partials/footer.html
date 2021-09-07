@@ -2,42 +2,27 @@
   templateType: global_partial
   label: Footer
 -->
-<footer class="footer">
-  {% dnd_area 'footer'
-    label='Footer',
-    class='footer__container content-wrapper'
-  %}
+<footer class="grid px-2 pt-8 pb-4 footer md:px-8 md:grid-cols-2">
+  <div class="flex items-center justify-center logo-n-contact md:justify-start">
+    <div class="flex flex-col items-center justify-center content-wrap">
+      <a href="#" class="block mb-5">
+        <img src="https://f.hubspotusercontent20.net/hubfs/20507678/img/gx/logo-white.png"
+          class="w-full h-auto" alt="white logo for wise medicare">
+      </a>
+      <p class="mb-1 text-lg text-center text-white">708A N. Bishop Ave.,<br class="block md-hidden" Rolla, MO 65401</p>
+      <a href="tel:1-800-861-4498" class="block mx-auto mb-6 text-xl text-center text-white md:mb-0"><span class="text-center text-white" itemprop="telephone" content="+18008614498">1-800-861-4498</span></a>
+    </div> <!-- /.content-wrap -->
+  </div> <!-- /.logo-n-contact -->
 
-    {# Social follow and copyright #}
-
-    {% dnd_section %}
-      {% dnd_column %}
-        {% dnd_row %}
-          {% dnd_module path='../../modules/social-follow' %}
-            {% module_attribute 'social_link' is_json=True %}
-              [
-                {"social_account": "facebook-f"},
-                {"social_account": "linkedin-in"},
-                {"social_account": "twitter"},
-                {"social_account": "instagram"}
-              ]
-            {% end_module_attribute %}
-          {% end_dnd_module %}
-        {% end_dnd_row %}
-        {% dnd_row
-          margin={
-            'top': 12,
-            'bottom': 12
-          }
-        %}
-          {% dnd_module
-            path='@hubspot/rich_text',
-            html='<div style="text-align: center; font-size: 0.7rem;"><span>© {{ year }} All rights reserved.</span></div>'
-          %}
-          {% end_dnd_module %}
-        {% end_dnd_row %}
-      {% end_dnd_column %}
-    {% end_dnd_section %}
-
-  {% end_dnd_area %}
+  <div class="flex items-center justify-center social-n-copyright md:justify-end">
+    <div class="flex flex-col items-center justify-center content-wrap">
+      <a href="#" class="block mb-6" target="_blank"><img
+          src="https://f.hubspotusercontent20.net/hubfs/20507678/img/gx/logo-youtube.png"
+          alt="watch our videos on youtube"></a>
+      <a href="#" class="block mb-6" target="_blank"><img
+          src="https://f.hubspotusercontent20.net/hubfs/20507678/img/gx/logo-facebook.png"
+          alt="find us on facebook"></a>
+      <p class="text-xs text-white">&copy; {{ year }} Wise Medicare</p>
+    </div><!-- /.content-wrapper -->
+  </div> <!-- /.social-n-copyright -->
 </footer>
