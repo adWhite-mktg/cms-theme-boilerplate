@@ -85,3 +85,9 @@
 		grid-row: 3/7;
 	}
 }
+
+@media (min-width: 845px) {
+  .hero-copy {
+    margin-top: 25px;
+  }
+}
