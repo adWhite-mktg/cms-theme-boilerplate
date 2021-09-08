@@ -36,3 +36,26 @@ button:disabled,
   text-decoration: none;
   transition: none;
 }
+
+
+/**/
+
+.hs-submit .hs-button.primary.large:hover {
+  background-color: rgba(119, 58, 106, 1) !important;
+}
+
+.cta_button {
+  background-image: url(https://f.hubspotusercontent20.net/hubfs/20507678/img/gx/gather-bg_.png), 
+  url(https://f.hubspotusercontent20.net/hubfs/20507678/img/gx/gather-bg_.png),
+  url(https://f.hubspotusercontent20.net/hubfs/20507678/img/gx/gather-bg_.png),
+  url(https://f.hubspotusercontent20.net/hubfs/20507678/img/gx/gather-bg_.png);
+  background-position: -1470px center, 205px center, center -320px, center 50px;
+  background-repeat: no-repeat, no-repeat, no-repeat, no-repeat;
+  background-size: contain contain contain contain;
+  transition: all .5s cubic-bezier(0.25, 0.1, 0.42, 1.32);
+}
+
+.cta_button:hover {
+  color: #fff;
+  background-position: center center, center center, center center, center center;
+}
