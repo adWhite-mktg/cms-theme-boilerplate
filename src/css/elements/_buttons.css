@@ -59,3 +59,27 @@ button:disabled,
   color: #fff;
   background-position: center center, center center, center center, center center;
 }
+
+
+
+
+.btn-learn-more {
+  border: 1px solid #fff;
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  margin-top: 25px;
+  display: inline-block;
+  color: #fff;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 20px;
+}
+
+.btn-learn-more:hover {
+  color: #fff;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 20px;
+}

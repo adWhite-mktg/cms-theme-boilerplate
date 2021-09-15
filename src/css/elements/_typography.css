@@ -85,3 +85,8 @@ img {
   font-size: 0.583rem;
   word-break: normal;
 }
+
+
+.widget-type-rich_text h3 {
+  margin-bottom: 8px !important;
+}
