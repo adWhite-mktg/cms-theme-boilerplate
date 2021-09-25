@@ -222,7 +222,7 @@ select,
 textarea {
   color: #424242 !important;
   font-family: sans-serif;
-  text-transform: uppercase;
+  /* text-transform: uppercase; */
 }
 
 .hbspt-form .hs-form-field {
