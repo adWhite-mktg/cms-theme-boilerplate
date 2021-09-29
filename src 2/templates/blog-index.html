@@ -1,0 +1,160 @@
+<!--
+  templateType: blog_listing
+  isAvailableForNewContent: true
+  label: Boilerplate - blog listing
+  screenshotPath: ../images/template-previews/blog-index.png
+-->
+{% set template_css = '../../css/templates/blog.css' %}
+{% extends './layouts/base.html' %}
+
+{% block body %}
+
+{# The main-content ID is used for the navigation skipper in the header.html file. More information on the navigation skipper can be found here: https://github.com/HubSpot/cms-theme-boilerplate/wiki/Accessibility #}
+
+<main id="main-content" class="body-container-wrapper">
+  {% dnd_area 'dnd_area'
+    label='Main section',
+    class='body-container body-container--blog-index'
+  %}
+
+  {# Hero banner #}
+
+  {% end_dnd_area %}
+
+  <section class="py-16">
+    <div class="flex flex-wrap max-w-screen-2xl mx-auto">
+      <article class="w-full md:w-2/3 md:pr-12">
+        {# Blog Listing #}
+        {% for content in contents|sort(True, False, 'publish_date') %}
+        <div class="blog-card test">
+
+          <section
+            class="blog-card__content {% if !content.featured_image or group.use_featured_image_in_summary == 'false' %}blog-card__content--full-width{% endif %}">
+            {% if content.tag_list %}
+            <!-- div class="blog-card__tags">
+                    {% for tag in content.tag_list %}
+                      <a class="blog-card__tag-link" href="{{ blog_tag_url(group.id, tag.slug) }}">{{ tag.name }}{% if !loop.last%},{% endif %}</a>
+                    {% endfor %}
+                  </div -->
+            {% endif %}
+            <h3 class="blog-card__title"><a href="{{ content.absolute_url }}">{{ content.name }}</a></h3>
+            <div class="bound flex">
+
+              {% if content_group.show_summary_in_listing %}
+              <div class="blog-card__post-summary">
+                {% if content.post_body is string_containing "<!--more-->" %}
+                {{ content.post_list_content }}
+                {% else %}
+                {{ content.post_list_content|truncatehtml(170) }}
+                {% endif %}
+              </div>
+              {% endif %}
+
+              {% if content.featured_image and group.use_featured_image_in_summary %}
+              <div class="blog-card__image-wrapper">
+                <img class="blog-card__image img-fluid" src="{{ content.featured_image }}"
+                  alt="{{ content.featured_image_alt_text }}">
+              </div>
+              {% endif %}
+            </div> <!-- /.bound -->
+
+            <div class="blog-card__author d-none">
+              {% if content.blog_author.avatar %}
+              <div class="blog-card__author-image" style="background-image: url('{{ content.blog_author.avatar }}');">
+              </div>
+              {% endif %}
+              <a class="blog-card__author-name"
+                href="{{ group.absolute_url }}/author/{{ content.blog_post_author.slug }}">{{ content.blog_post_author.display_name }}</a>
+            </div> <!-- /.blog-card__author -->
+            <a class="blog-card__button button button" href="{{ content.absolute_url }}"><span>Read More</span></a>
+          </section>
+        </div>
+        {% endfor %}
+        {# End Blog Listing #}
+      </article>
+      <aside class="w-full md:w-1/3 md:pl-12">
+        <div class="section__subscribe p-3">
+          <h3>Subscribe to Our Blog</h3>
+          <!--[if lte IE 8]>
+<script charset="utf-8" type="text/javascript" src="//js.hsforms.net/forms/v2-legacy.js"></script>
+<![endif]-->
+          <script charset="utf-8" type="text/javascript" src="//js.hsforms.net/forms/v2.js"></script>
+          <script>
+            hbspt.forms.create({
+              region: "na1",
+              portalId: "20507678",
+              formId: "dc507b9c-5d1e-4b71-9ccf-2ee4b6c0211f"
+            });
+          </script>
+        </div> <!-- /.section__subscribe -->
+
+        <div class="section__recent mt-5 p-3 mb-5">
+          <div class="recentbox-head pb-2">
+            <h3>Recent posts</h3>
+          </div>
+          {% set rec_posts = blog_recent_posts('default', 3) %}
+          <div class="recentboxesParent">
+            <div class="recentboxes">
+              {% for rec_post in rec_posts %}
+              <div>
+                <div class="recentbox">
+                  <div class="recentbox-left-img bg" style="background-image:url({{ rec_post.featured_image }})">
+
+                  </div>
+                  <div class="recentbox-right">
+                    <div class="recentbox-title">
+                      <a href="{{rec_post.absolute_url}}">{{  rec_post.name }}</a>
+                    </div>
+                    <!-- 
+                      <div class="recent-box-date">
+                        {{ datetimeformat(rec_post.publish_date_local_time, '%b %e, %Y') }}
+                      </div>
+                       -->
+                  </div>
+                </div>
+              </div>
+              {% endfor %}
+            </div>
+          </div>
+        </div> <!-- /.section__recent -->
+
+        <div class="section__topics p-3">
+          {% post_filter "post_filter" expand_link_text='see all', filter_type='topic', list_title='Posts by Topic', max_links=5, overrideable=False, select_blog='default', label='Posts by Topic' %}
+        </div> <!-- /.section__topics -->
+      </aside>
+    </div>
+  </section>
+  <section>
+    {# Blog Pagination #}
+    {% if contents.total_page_count > 1 %}
+    <div class="blog-pagination">
+      {% set page_list = [-2, -1, 0, 1, 2] %}
+      {% if contents.total_page_count - current_page_num == 1 %}{% set offset = -1 %}
+      {% elif contents.total_page_count - current_page_num == 0 %}{% set offset = -2 %}
+      {% elif current_page_num == 2 %}{% set offset = 1 %}
+      {% elif current_page_num == 1 %}{% set offset = 2 %}
+      {% else %}{% set offset = 0 %}{% endif %}
+
+      <a class="blog-pagination__link blog-pagination__prev-link {{ 'blog-pagination__prev-link--disabled' if !last_page_num }}"
+        {% if last_page_num %}
+        href="{% if current_page_num == 2 %}{{ group.absolute_url }}{% else %}{{ blog_page_link(last_page_num) }}{% endif %}"
+        {% endif %}>
+        {% icon name='chevron-left' style='SOLID', width='13', no_wrapper=True %}
+      </a>
+      {% for page in page_list %}
+      {% set this_page = current_page_num + page + offset %}
+      {% if this_page > 0 and this_page <= contents.total_page_count %}
+      <a class="blog-pagination__link blog-pagination__number-link {{ 'blog-pagination__link--active' if this_page == current_page_num }}"
+        href="{% if this_page == 1 %}{{ group.absolute_url }}{% else %}{{ blog_page_link(this_page) }}{% endif %}">{{ this_page }}</a>
+      {% endif %}
+      {% endfor %}
+      <a class="blog-pagination__link blog-pagination__next-link {{ 'blog-pagination__next-link--disabled' if !next_page_num }}"
+        {% if next_page_num %} href="{{ blog_page_link(current_page_num + 1) }}" {% endif %}>
+        {% icon name='chevron-right' style='SOLID', width='13', no_wrapper=True %}
+      </a>
+    </div>
+    {% endif %}
+    {# End Blog Pagination #}
+  </section>
+</main>
+{% endblock body %}

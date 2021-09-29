@@ -1,0 +1,71 @@
+.section_hero {
+	display: grid;
+	grid-template-columns: repeat(10, 1fr);
+	grid-template-rows: 0.5fr 0.5fr repeat(4, 1fr);
+	grid-column-gap: 0px;
+	grid-row-gap: 0px;
+}
+
+.background-pattern {
+	grid-column: 1/11;
+	grid-row: 2/10;
+	z-index: 0;
+}
+
+.human-couple {
+	grid-column: 2/7;
+	grid-row: 1/10;
+	z-index: 100;
+}
+
+.hero-copy {
+	grid-column: 6/10;
+	grid-row: 3/7;
+	z-index: 200;
+}
+
+.cta_wise {
+	background-color: #156a97;
+	color: #fff;
+	padding: 10px 40px;
+}
+
+/* remove padding from hs elements surrounding hero module*/
+  #main-content > div > div > div > div > div.row-fluid-wrapper.row-depth-1.row-number-1.dnd_area-row-0-margin.dnd_area-row-0-force-full-width-section.dnd-section.dnd_area-row-0-padding > div > div {
+    padding: 0;
+}
+  
+/* pull hero up to overlap main nav */
+
+@media (min-width: 1390px) {
+  main#main-content {
+       margin-top: -77px;
+   }
+}
+
+@media (min-width: 1400px) {
+  main#main-content {
+       margin-top: -89px;
+   }
+}
+
+@media (min-width: 1470px) {
+  main#main-content {
+       margin-top: -93px;
+   }
+}
+
+
+@media (min-width: 1695px) {
+  main#main-content {
+       margin-top: -106px;
+   }
+}
+
+
+
+  
+
+  
+
+
