@@ -14,76 +14,126 @@
 <main id="main-content" class="body-container-wrapper">
   <div class="body-container body-container--blog-post">
 
-    {# Blog post #}
 
-    <div class="content-wrapper">
-      <article class="blog-post">
-        <h1>{{ content.name }}</h1>
-        <div class="blog-post__meta">
-          <a href="{{ blog_author_url(group.id, content.blog_post_author.slug) }}" rel="author">
-            {{ content.blog_post_author.display_name }}
-          </a>
-          <time datetime="{{ content.publish_date }}" class="blog-post__timestamp">
-            {{ content.publish_date_localized }}
-          </time>
-        </div>
-        <div class="blog-post__body">
-          {{ content.post_body }}
-        </div>
-        {% if content.tag_list %}
-        <div class="blog-post__tags">
-          {% icon
-              name='tag',
-              purpose='decorative',
-              style='SOLID'
-            %}
-          {% for tag in content.tag_list %}
-          <a class="blog-post__tag-link" href="{{ blog_tag_url(group.id, tag.slug) }}"
-            rel="tag">{{ tag.name }}</a>{% if not loop.last %},{% endif %}
-          {% endfor %}
-        </div>
-        {% endif %}
-      </article>
 
-    </div>
-
-    {# Recent posts listing #}
-
-    {# This macro is used to format each recent post card and gets passed to the related_blog_posts HubL tag below #}
-
-    {% macro related_posts(post, count, total) %}
-    {% if count == 1 %}
-    <section class="blog-related-posts">
-      <div class="content-wrapper">
-        <h2>Read On</h2>
-        <div class="blog-related-posts__list">
-          {% endif %}
-          <article class="blog-related-posts__post" aria-label="Blog post summary: {{ post.name }}">
-            {% if post.featured_image %}
-            <a class="blog-related-posts__post-image-wrapper" href="{{ post.absolute_url }}"
-              aria-label="{% if post.featured_image_alt_text %} Featured image: {{ post.featured_image_alt_text }} - {% endif %}Read full post: {{ post.name }}">
-              <img class="blog-related-posts__image" src="{{ post.featured_image }}" loading="lazy" width="352"
-                alt="{{ post.featured_image_alt_text }}">
+    <section class="py-16">
+      <div
+        class="flex flex-wrap px-6 md:px-0 lg:px-12 2xl:px-0 md:max-w-screen-sm lg:max-w-screen-lg xl:max-w-screen-2xl mx-auto">
+        <article class="w-full lg:w-2/3 lg:pr-12">
+          {# Blog post #}
+          <h1>{{ content.name }}</h1>
+          <div class="blog-post__meta">
+            <!-- 
+            <a href="{{ blog_author_url(group.id, content.blog_post_author.slug) }}" rel="author">
+              {{ content.blog_post_author.display_name }}
             </a>
-            {% endif %}
-            <div class="blog-related-posts__content">
-              <h3 class="blog-related-posts__title"><a href="{{ post.absolute_url }}">{{ post.name }}</a></h3>
-              {{ post.post_summary|truncatehtml(100) }}
+             -->
+            <time datetime="{{ content.publish_date }}" class="blog-post__timestamp">
+              {{ content.publish_date|datetimeformat('%B %e, %Y') }}
+            </time>
+            {% if content.tag_list %}
+            <div class="blog-post__tags">
+              {% icon
+                    name='tag',
+                    purpose='decorative',
+                    style='SOLID'
+                  %}
+              {% for tag in content.tag_list %}
+              <a class="blog-post__tag-link" href="{{ blog_tag_url(group.id, tag.slug) }}"
+                rel="tag">{{ tag.name }}</a>{% if not loop.last %},{% endif %}
+              {% endfor %}
             </div>
-          </article>
-          {% if count == total %}
-        </div>
+            {% endif %}
+
+          </div>
+          <div class="blog-post__body">
+            {{ content.post_body }}
+          </div>
+          {# End blog post #}
+        </article>
+        <aside class="w-full lg:w-1/3 lg:pl-12">
+          <div class="section__subscribe p-3">
+            <h3>Subscribe to Our Blog</h3>
+            <!--[if lte IE 8]>
+  <script charset="utf-8" type="text/javascript" src="//js.hsforms.net/forms/v2-legacy.js"></script>
+  <![endif]-->
+            <script charset="utf-8" type="text/javascript" src="//js.hsforms.net/forms/v2.js"></script>
+            <script>
+              hbspt.forms.create({
+                region: "na1",
+                portalId: "20507678",
+                formId: "dc507b9c-5d1e-4b71-9ccf-2ee4b6c0211f"
+              });
+            </script>
+          </div> <!-- /.section__subscribe -->
+
+          <div class="section__recent mt-5 p-3 mb-5">
+            <div class="recentbox-head pb-2">
+              <h3>Recent posts</h3>
+            </div>
+            {% set rec_posts = blog_recent_posts('default', 3) %}
+            <div class="recentboxesParent">
+              <div class="recentboxes">
+                {% for rec_post in rec_posts %}
+                <div>
+                  <div class="recentbox">
+                    <div class="recentbox-left-img bg" style="background-image:url({{ rec_post.featured_image }})">
+
+                    </div>
+                    <div class="recentbox-right">
+                      <div class="recentbox-title">
+                        <a href="{{rec_post.absolute_url}}">{{  rec_post.name }}</a>
+                      </div>
+                      <!-- 
+                        <div class="recent-box-date">
+                          {{ datetimeformat(rec_post.publish_date_local_time, '%b %e, %Y') }}
+                        </div>
+                         -->
+                    </div>
+                  </div>
+                </div>
+                {% endfor %}
+              </div>
+            </div>
+          </div> <!-- /.section__recent -->
+
+          <div class="section__topics p-3">
+            {% post_filter "post_filter" expand_link_text='see all', filter_type='topic', list_title='Posts by Topic', max_links=5, overrideable=False, select_blog='default', label='Posts by Topic' %}
+          </div> <!-- /.section__topics -->
+        </aside>
       </div>
     </section>
-    {% endif %}
-    {% endmacro %}
+    <section>
+      {# Blog Pagination #}
+      {% if contents.total_page_count > 1 %}
+      <div class="blog-pagination">
+        {% set page_list = [-2, -1, 0, 1, 2] %}
+        {% if contents.total_page_count - current_page_num == 1 %}{% set offset = -1 %}
+        {% elif contents.total_page_count - current_page_num == 0 %}{% set offset = -2 %}
+        {% elif current_page_num == 2 %}{% set offset = 1 %}
+        {% elif current_page_num == 1 %}{% set offset = 2 %}
+        {% else %}{% set offset = 0 %}{% endif %}
 
-    {% related_blog_posts
-      limit=3,
-      no_wrapper=True,
-      post_formatter="related_posts"
-    %}
-
-  </div>
+        <a class="blog-pagination__link blog-pagination__prev-link {{ 'blog-pagination__prev-link--disabled' if !last_page_num }}"
+          {% if last_page_num %}
+          href="{% if current_page_num == 2 %}{{ group.absolute_url }}{% else %}{{ blog_page_link(last_page_num) }}{% endif %}"
+          {% endif %}>
+          {% icon name='chevron-left' style='SOLID', width='13', no_wrapper=True %}
+        </a>
+        {% for page in page_list %}
+        {% set this_page = current_page_num + page + offset %}
+        {% if this_page > 0 and this_page <= contents.total_page_count %}
+        <a class="blog-pagination__link blog-pagination__number-link {{ 'blog-pagination__link--active' if this_page == current_page_num }}"
+          href="{% if this_page == 1 %}{{ group.absolute_url }}{% else %}{{ blog_page_link(this_page) }}{% endif %}">{{ this_page }}</a>
+        {% endif %}
+        {% endfor %}
+        <a class="blog-pagination__link blog-pagination__next-link {{ 'blog-pagination__next-link--disabled' if !next_page_num }}"
+          {% if next_page_num %} href="{{ blog_page_link(current_page_num + 1) }}" {% endif %}>
+          {% icon name='chevron-right' style='SOLID', width='13', no_wrapper=True %}
+        </a>
+      </div>
+      {% endif %}
+      {# End Blog Pagination #}
+    </section>
 </main>
 {% endblock body %}
