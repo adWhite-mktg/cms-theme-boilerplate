@@ -69,7 +69,11 @@
 	}
 
 }
+
 @media (min-width: 1390px) {
+  .section_hero {
+	grid-template-rows: 0.5fr 0.5fr repeat(5, 1fr);
+}
 	.background-pattern {
 		display: block;
 		grid-column: 1/11;
@@ -78,11 +82,25 @@
 	}
 
 	.human-couple {
-		width: 100%;
+		grid-column: 2/7;
+		grid-row: 2/10;
 	}
 
 	.hero-copy {
 		grid-row: 3/7;
+	}
+}
+
+
+@media (min-width: 1650px) {
+  
+    .section_hero {
+	grid-template-rows: 0.5fr 0.5fr repeat(4, 1fr);
+}
+
+	.human-couple {
+		grid-row: 1/10;
+    width: 100%;
 	}
 }
 
