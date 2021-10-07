@@ -90,10 +90,14 @@
 }
 
 
-
-.blog-card__image {
-  max-width: 350px !important;
+@media (min-width: 768px) {
+  .blog-card__image {
+    max-width: 300px !important;
+    margin-left: 25px;
+  }
 }
+
+
 
 .section__recent,
 .section__topics,

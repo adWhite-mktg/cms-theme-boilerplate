@@ -1,4 +1,4 @@
-footer {
+#colophon {
   background-image: url(https://f.hubspotusercontent20.net/hubfs/20507678/img/bg-footer.png);
   background-size: cover;
   background-position: center center;
@@ -7,4 +7,30 @@ footer {
 
 .logo-n-contact img {
   max-width: 400px;
+}
+
+.gx-icon-news,
+.gx-social {
+	max-height: 64px;
+}
+
+@media (min-width: 1280px) {
+	.col2 > div {
+		width: 100%;
+	}
+}
+
+@media (min-width: 1536px) {
+	.col2 > div {
+		width: 70%;
+	}
+}
+
+@media (min-width: 1736px) {
+	.row2 > div {
+	}
+}
+
+#colophon .text-white {
+	color: #fff !important;
 }
