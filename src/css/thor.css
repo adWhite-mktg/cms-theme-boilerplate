@@ -38,12 +38,15 @@ body {
 
 
 /* LISTS */
+.hs_cos_wrapper_type_rich_text ul li,
 .widget-type-rich_text ul li {
   list-style-type: disc !important;
   margin-bottom: 15px !important;
   margin-left: 20px !important;
 }
 
+
+.hs_cos_wrapper_type_rich_text ol li,
 .widget-type-rich_text ol li {
   list-style-type: decimal !important;
   margin-bottom: 15px !important;
